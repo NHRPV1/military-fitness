@@ -1,1 +1,138 @@
-
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#172c43">
+  <meta name="description" content="Osobní tréninkový deník MILITARY FITNESS">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <title>MILITARY FITNESS</title>
+  <style>
+    :root{--navy:#172c43;--navy2:#213c58;--green:#278253;--bg:#f2f5f8;--card:#fff;--ink:#182536;--muted:#687789;--line:#e1e7ed;--soft:#eaf0f5}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    button,input{font:inherit}button{cursor:pointer}
+    .shell{max-width:760px;margin:auto;min-height:100vh;padding-bottom:28px}
+    header{background:linear-gradient(145deg,var(--navy),var(--navy2));color:white;padding:24px 18px 18px;border-radius:0 0 22px 22px}
+    .topline{display:flex;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:.12em;color:#d5e2ed;font-weight:700}
+    h1{font-size:27px;letter-spacing:.04em;margin:12px 0 3px}header p{margin:0;color:#d5e2ed;font-size:13px}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.stat{background:#ffffff14;border:1px solid #ffffff22;border-radius:13px;padding:12px}.stat strong{display:block;font-size:25px}.stat span{font-size:12px;color:#d5e2ed}
+    nav{display:flex;gap:8px;padding:12px 14px;position:sticky;top:0;background:var(--bg);z-index:5}
+    nav button{flex:1;border:0;border-radius:12px;padding:12px 8px;background:#e2e9ef;color:#34465a;font-weight:700}
+    nav button.active{background:var(--navy);color:white}
+    main{padding:5px 14px 20px}.panel{display:none}.panel.active{display:block}
+    .section-title{font-size:19px;margin:12px 0 4px}.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;margin:11px 0;box-shadow:0 2px 8px #15283b08}
+    .progress-track{height:9px;border-radius:20px;background:#e8edf1;overflow:hidden;margin-top:9px}.progress-fill{height:100%;width:0;background:#39a36b;border-radius:20px;transition:width .2s}
+    .task{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}
+    .task input{width:21px;height:21px;accent-color:var(--green);flex:none}.task label{flex:1}.task small{display:block;color:var(--muted);font-size:12px}
+    .pill{font-size:11px;font-weight:800;letter-spacing:.06em;color:#31516c;background:#eaf0f5;padding:5px 8px;border-radius:30px}
+    .daygrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 0}.day{border:1px solid var(--line);background:white;border-radius:11px;padding:9px 2px;text-align:center;font-size:11px;color:var(--muted)}.day strong{display:block;font-size:16px;color:var(--ink);margin-bottom:3px}.day.training{border-color:#a9c9b6;background:#edf7f0}.day.done{background:#dff2e6;border-color:#64ad7d}
+    .workout-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.workout-head h3{margin:0;font-size:17px}.workout-head p{margin:3px 0;color:var(--muted);font-size:13px}
+    .exercise{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}.exercise:last-child{border-bottom:0}.exercise b{font-size:14px}.exercise small{display:block;color:var(--muted);font-size:12px}.exercise input{width:21px;height:21px;accent-color:var(--green)}
+    .note{background:#fff8e8;border:1px solid #f0dfb5;color:#6d5627;border-radius:12px;padding:11px;font-size:12px;margin:12px 0}
+    .btn{border:0;background:var(--navy);color:white;border-radius:11px;padding:11px 14px;font-weight:700}.btn.secondary{background:#e8edf2;color:#263b50}.btn.danger{background:#f9e8e8;color:#963c3c}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row input{min-width:0;flex:1;border:1px solid var(--line);border-radius:10px;padding:10px;background:white}
+    .history-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+    .empty{color:var(--muted);font-size:13px;padding:10px 0}
+    footer{text-align:center;color:var(--muted);font-size:11px;padding:12px}
+    @media(min-width:600px){header{margin-top:14px;border-radius:22px}.shell{padding:0 12px 30px}}
+  </style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="topline"><span>PERSONAL FITNESS SYSTEM</span><span>◈ 01</span></div>
+  <h1>MILITARY FITNESS</h1>
+  <p>OSOBNÍ TRÉNINKOVÝ DENÍK</p>
+  <div class="stats">
+    <div class="stat"><strong id="morningStat">0%</strong><span>Dnešní rozcvička</span></div>
+    <div class="stat"><strong id="weekStat">0/4</strong><span>Tréninky tento týden</span></div>
+  </div>
+</header>
+<nav>
+  <button class="active" data-tab="overview">Přehled</button>
+  <button data-tab="exercise">Cvičení</button>
+</nav>
+<main>
+<section class="panel active" id="overview">
+  <h2 class="section-title">Ranní rozcvička</h2>
+  <p class="sub">Odškrtni si úkoly, které jsi dnes dokončil.</p>
+  <div class="card">
+    <div class="row" style="justify-content:space-between"><b>Denní checklist</b><span class="pill" id="morningCount">0/9</span></div>
+    <div class="progress-track"><div class="progress-fill" id="morningProgress"></div></div>
+    <div id="morningTasks"></div>
+    <button class="btn secondary" id="resetMorning">Vynulovat dnešní checklist</button>
+  </div>
+  <h2 class="section-title">Test tělocviku</h2>
+  <p class="sub">Zaznamenej čas celé překážkové sestavy.</p>
+  <div class="card">
+    <div class="row"><input id="timeInput" type="number" min="1" max="600" value="30" aria-label="Čas v sekundách"><span>sekund</span><button class="btn" id="saveTime">Uložit čas</button></div>
+    <div class="row" style="justify-content:space-between;margin-top:13px">
+      <div><small style="color:var(--muted)">Výchozí čas</small><br><b>30 s</b></div>
+      <div><small style="color:var(--muted)">Cíl pro známku</small><br><b>21 s</b></div>
+    </div>
+    <div id="timeHistory"></div>
+  </div>
+</section>
+<section class="panel" id="exercise">
+  <h2 class="section-title">Týdenní kalendář</h2>
+  <p class="sub">Čtyři návštěvy fitka URAL, pondělí až pátek.</p>
+  <div class="daygrid" id="calendar"></div>
+  <div class="note"><b>Rozvrh:</b> Pondělí A · Úterý B · Středa regenerace · Čtvrtek C · Pátek D. Víkend volno.</div>
+  <div id="workouts"></div>
+  <div class="note"><b>Bezpečnost:</b> Začni lehkou zátěží, soustřeď se na techniku a necvič do úplného vyčerpání. U strojů požádej obsluhu fitka o nastavení. Pokud něco bolí, cvik přeruš. Plán si případně prober s trenérem a rodičem.</div>
+</section>
+</main>
+<footer>Tréninkový plán je orientační. Odpočinek je součást tréninku.</footer>
+</div>
+<script>
+const morning = [
+ ["Zahřátí","2 minuty lehkého pohybu"],["Kliky","10 opakování"],["Sed-lehy","15 opakování"],
+ ["Dřepy","20 opakování"],["Kliky","10 opakování"],["Sed-lehy","15 opakování"],
+ ["Dřepy","20 opakování"],["Prkno","20 sekund"],["Prkno","20 sekund"]
+];
+const plans = [
+ {day:"PONDĚLÍ",letter:"A",name:"Celé tělo A",focus:"Základní technika",run:"5–10 min lehké chůze/běhu",items:[["Leg press","2 × 10–12"],["Chest press – stroj","2 × 10–12"],["Stahování horní kladky","2 × 10–12"],["Zakopávání – stroj","2 × 10–12"],["Tlaky na ramena – stroj","1–2 × 10"],["Dead bug","2 × 8 na stranu"]]},
+ {day:"ÚTERÝ",letter:"B",name:"Celé tělo B",focus:"Lehčí den – kontrolovaný pohyb",run:"5–10 min pohodlně, klidně střídání chůze a běhu",items:[["Goblet squat – lehká jednoručka","2 × 10"],["Přítahy vsedě – stroj","2 × 10–12"],["Tlaky na prsa – stroj","1–2 × 10"],["Glute bridge","2 × 12"],["Výpony na lýtka","2 × 12"],["Bird dog","2 × 8 na stranu"]]},
+ {day:"ČTVRTEK",letter:"C",name:"Celé tělo C",focus:"Síla a stabilita",run:"5–10 min lehké chůze/běhu",items:[["Leg press","2 × 10"],["Chest press – stroj","2 × 10"],["Veslování – stroj","2 × 10–12"],["Zakopávání – stroj","2 × 12"],["Tlaky na ramena – stroj","1–2 × 10"],["Plank","2 × 15–20 sekund"]]},
+ {day:"PÁTEK",letter:"D",name:"Celé tělo D",focus:"Lehčí celotělový trénink",run:"5–10 min pohodlně, bez sprintů",items:[["Goblet squat – lehká jednoručka","2 × 10"],["Stahování horní kladky","2 × 10"],["Chest press – stroj","1–2 × 10"],["Glute bridge","2 × 12"],["Přítahy vsedě – stroj","2 × 10"],["Dead bug","2 × 8 na stranu"]]}
+];
+const keyDate=()=>new Date().toLocaleDateString('sv-SE');
+const mondayKey=()=>{let d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-(d.getDay()+6)%7);return d.toLocaleDateString('sv-SE')};
+let state=JSON.parse(localStorage.getItem('mf_state')||'{}');
+function save(){localStorage.setItem('mf_state',JSON.stringify(state));render()}
+function getTodayMorning(){return state.morning?.[keyDate()]||[]}
+function renderMorning(){
+ const done=getTodayMorning(), host=document.getElementById('morningTasks');host.innerHTML='';
+ morning.forEach((t,i)=>{let row=document.createElement('div');row.className='task';row.innerHTML=`<input type="checkbox" id="m${i}" ${done.includes(i)?'checked':''}><label for="m${i}"><b>${t[0]}</b><small>${t[1]}</small></label>`;row.querySelector('input').addEventListener('change',e=>{let a=getTodayMorning();state.morning=state.morning||{};state.morning[keyDate()]=e.target.checked?[...a,i]:a.filter(x=>x!==i);save()});host.append(row)});
+ let p=Math.round(done.length/morning.length*100);document.getElementById('morningStat').textContent=p+'%';document.getElementById('morningCount').textContent=done.length+'/9';document.getElementById('morningProgress').style.width=p+'%';
+}
+function weekDone(){let wk=mondayKey();return state.weekDone?.[wk]||[]}
+function renderCalendar(){
+ let cal=document.getElementById('calendar');cal.innerHTML='';let now=new Date(), start=new Date(now);start.setDate(now.getDate()-(now.getDay()+6)%7);
+ let names=['PO','ÚT','ST','ČT','PÁ','SO','NE'], days=weekDone();
+ for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);let el=document.createElement('div');el.className='day'+([0,1,3,4].includes(i)?' training':'')+(days.includes(i)?' done':'');el.innerHTML=`<span>${names[i]}</span><strong>${d.getDate()}</strong>${days.includes(i)?'✓':([0,1,3,4].includes(i)?'FIT':'VOL')}</div>`;cal.append(el)}
+ document.getElementById('weekStat').textContent=days.length+'/4';
+}
+function renderWorkouts(){
+ let host=document.getElementById('workouts');host.innerHTML='';
+ plans.forEach((p,i)=>{
+  let done=weekDone().includes(i), card=document.createElement('div');card.className='card';
+  let h=document.createElement('div');h.className='workout-head';h.innerHTML=`<div><span class="pill">${p.day} · TRÉNINK ${p.letter}</span><h3 style="margin-top:8px">${p.name}</h3><p>${p.focus}</p></div><span style="font-size:22px">${done?'✅':'🏋️'}</span>`;card.append(h);
+  let run=document.createElement('div');run.className='note';run.innerHTML='<b>Běžecký pás:</b> '+p.run;card.append(run);
+  p.items.forEach((item,j)=>{let row=document.createElement('div');row.className='exercise';let checked=!!state.exerciseDone?.[mondayKey()]?.[i+'-'+j];row.innerHTML=`<div><b>${item[0]}</b><small>${item[1]}</small></div><input type="checkbox" aria-label="Splněno: ${item[0]}" ${checked?'checked':''}>`;row.querySelector('input').addEventListener('change',e=>{state.exerciseDone=state.exerciseDone||{};state.exerciseDone[mondayKey()]=state.exerciseDone[mondayKey()]||{};state.exerciseDone[mondayKey()][i+'-'+j]=e.target.checked;save()});card.append(row)});
+  let btn=document.createElement('button');btn.className='btn '+(done?'secondary':'');btn.style.marginTop='13px';btn.textContent=done?'Označeno jako dokončené':'Dokončit trénink';btn.addEventListener('click',()=>{let a=weekDone();state.weekDone=state.weekDone||{};state.weekDone[mondayKey()]=done?a.filter(x=>x!==i):[...a,i];save()});card.append(btn);
+  host.append(card);
+ });
+}
+function renderHistory(){let host=document.getElementById('timeHistory');let arr=state.times||[];host.innerHTML=arr.length?'<h4>Historie měření</h4>'+arr.slice().reverse().map(x=>`<div class="history-item"><span>${new Date(x.date).toLocaleDateString('cs-CZ')}</span><b>${x.value} s</b></div>`).join(''):'<p class="empty">Zatím nemáš uložené žádné měření.</p>'}
+function render(){renderMorning();renderCalendar();renderWorkouts();renderHistory()}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))}));
+document.getElementById('resetMorning').addEventListener('click',()=>{state.morning=state.morning||{};state.morning[keyDate()]=[];save()});
+document.getElementById('saveTime').addEventListener('click',()=>{let v=Number(document.getElementById('timeInput').value);if(!Number.isFinite(v)||v<1||v>600){alert('Zadej čas mezi 1 a 600 sekundami.');return}state.times=state.times||[];state.times.push({value:v,date:new Date().toISOString()});save()});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>

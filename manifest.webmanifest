@@ -1,0 +1,9 @@
+{
+  "name": "MILITARY FITNESS",
+  "short_name": "Military Fit",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f2f5f8",
+  "theme_color": "#172c43",
+  "description": "Osobní tréninkový deník a checklist"
+}
